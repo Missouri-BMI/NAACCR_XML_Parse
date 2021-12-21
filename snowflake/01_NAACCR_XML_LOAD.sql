@@ -3,9 +3,7 @@
 -- Create stage
 create or replace stage stage_naaccr
   url='azure://infodatarawdev.blob.core.windows.net/staginglz/CustomProjects/NAACCR'
-  credentials=(azure_sas_token='?sv=2019-02-02&st=2020-12-30T15%3A16%3A55Z&se=2021-12-31T15%3A16%3A00Z&sr=c&sp=racwdl&sig=KBN6F2By7IbAUq26MjKFIaqx2xVFLhz10etVHmVgUTI%3D')
-  encryption=(type='AZURE_CSE' master_key = 'kPxX0jzYfIamtnJEUTHwq80Au6NbSgPH5r4BDDwOaO8=')
-  file_format = xml_load;
+--removed credentials
   
 -- Create Table
 CREATE TABLE NAACCR_DATA (
