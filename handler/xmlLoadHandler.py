@@ -46,10 +46,12 @@ class xmlLoadHandler:
                     setattr(ti, k, v.strip())
                 nodes = [x for x in tumor if x.tag == "{http://naaccr.org/naaccrxml}Item"]
                 for node in nodes:
-                    setattr(ti, node.attrib.get("naaccrId"), node.text.strip())
+                    if not node.text is None:
+                        setattr(ti, node.attrib.get("naaccrId"), node.text.strip())
                 nodes = [x for x in patient if x.tag == "{http://naaccr.org/naaccrxml}Item"]
                 for node in nodes:
-                    setattr(ti, node.attrib.get("naaccrId"), node.text.strip())
+                    if not node.text is None:
+                        setattr(ti, node.attrib.get("naaccrId"), node.text.strip())
                 self._tumors.append(ti)
 
     def SaveTumors(self):
@@ -75,7 +77,7 @@ class xmlLoadHandler:
         logging.info(f"[number of XML items saved]: {qty}")
 
     def MostRecentTumor(self, conn, tumor):
-        params = (getattr(tumor,"medicalRecordNumber"), getattr(tumor, "tumorRecordNumber"), getattr(tumor, "registryId"), getattr(tumor, "dateCaseReportExported"))
+        params = (getattr(tumor,"medicalRecordNumber", 9999999), getattr(tumor, "tumorRecordNumber", 9999999), getattr(tumor, "registryId", 9999999), getattr(tumor, "dateCaseReportExported", 9999999))
         sql = """select * from NAACCR_DATA 
             where MEDICAL_RECORD_NUMBER_N2300 = ? and TUMOR_RECORD_NUMBER_N60 = ? and REGISTRY_ID_N40 = ?
             and DATE_CASE_REPORT_EXPORT_N2110 > ?"""
@@ -87,7 +89,7 @@ class xmlLoadHandler:
         return False
 
     def DeleteTumor(self, conn, tumor):
-        params = (getattr(tumor,"medicalRecordNumber"), getattr(tumor, "tumorRecordNumber"), getattr(tumor, "registryId"))
+        params = (getattr(tumor,"medicalRecordNumber", 9999999), getattr(tumor, "tumorRecordNumber", 9999999), getattr(tumor, "registryId", 9999999))
         sql = """delete from NAACCR_DATA 
             where MEDICAL_RECORD_NUMBER_N2300 = ? and TUMOR_RECORD_NUMBER_N60 = ? and REGISTRY_ID_N40 = ?"""
         cmd = conn.cursor()
@@ -125,7 +127,3 @@ class xmlLoadHandler:
             print(f"value too long - column: {key}, value: {attribute}, maxlen: {maxlen}")
             return False
         return True
-
-
-
-    

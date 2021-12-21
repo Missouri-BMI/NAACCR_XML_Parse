@@ -38,7 +38,7 @@ You may also want to install [DB Browser](https://sqlitebrowser.org/) to view th
 
 1. Clone the repo
    ```
-   git clone https://github.com/jimsvobodacode/NAACCR_XML_Parse.git
+   git clone https://github.com/Missouri-BMI/NAACCR_XML_Parse.git
    ```
 2. Install pip packages
    ```
@@ -53,6 +53,10 @@ You may also want to install [DB Browser](https://sqlitebrowser.org/) to view th
 2. Open Powershell in Windows 10
 3. Navigate to your project directory
 4. Run ```python app.py```
+5. Open naaccr_data.db with DB Browser
+6. Save database to CSV specifying pipe delimiter
+7. Copy .csv pipe-delimited file to Azure Blob Storage
+8. Run 01_NAACCR_XML_LOAD.sql in Snowflake to load data into Snowflake
 
 
 <!-- CONTRIBUTING -->
@@ -66,4 +70,4 @@ I'm only accepting bug fixes at this time.
 <!-- CONTACT -->
 ## Contact
 
-Jim Svoboda - jim.svoboda@unmc.edu - email
+original author - Jim Svoboda - jim.svoboda@unmc.edu - email
